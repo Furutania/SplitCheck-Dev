@@ -13,6 +13,8 @@ import styles  from './styles'
 import longLogo from '../assets/longLogoFinal.png'
 //Router
 import { useNavigation } from '@react-navigation/native';
+//Token Storage
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -50,9 +52,13 @@ const LoginScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [buttonPressed, setButtonPressed] = useState(false);
-    const [error, setError] = useState(false)
     const [errorVisible, setErrorVisible] = useState({display:"none"})
     const navigation = useNavigation();
+
+    //Check if user is logged in
+
+
+
     const handleEmailChange = (text) => {
         setEmail(text);
     };
@@ -60,12 +66,13 @@ const LoginScreen = () => {
     const handlePasswordChange = (text) => {
     setPassword(text);
     };
+    //TO DO, backend to check if account is there
+    // JSONWEB TOKENS
 
     const handleSubmit = () => {
-    // Here you can handle form submission, e.g., validate inputs, send to server, etc.
-    console.log('Login Info', `Email: ${email}\nPassword: ${password}`);
-    navigation.navigate("Home");
-    // Alert.alert('Login Info', `Email: ${email}\nPassword: ${password}`);
+        console.log('Login Info', `Email: ${email}\nPassword: ${password}`);
+        AsyncStorage.setItem('userToken', email);
+        navigation.navigate("Home");
     };
     const handleSignup = () =>{
         navigation.navigate("Signup");
